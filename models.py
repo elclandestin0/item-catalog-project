@@ -63,6 +63,16 @@ class User(Base):
     		return None
     	user_id = data['id']
     	return user_id
+    @property
+    def serialize(self):
+       """Return User object data in easily serializeable format"""
+       return {
+           'id'         : self.id,
+           'name'       : self.name,
+           'email'      : self.email,
+           'password_hash': self.password_hash
+           'image'      : self.image
+       }
 
 class Category(Base):
     """
@@ -90,6 +100,15 @@ class Category(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(250), nullable = False)
 
+    @property
+    def serialize(self):
+       """Return Category object data in easily serializeable format"""
+       return {
+           'id'         : self.id,
+           'name'       : self.name,
+       }
+
+
 
 class Item(Base):
     """
@@ -111,17 +130,27 @@ class Item(Base):
     can add items to. Everyone else (even the user who created the category)
     can neither edit nor delete these categories. However, they can add items
     within those categories and it is owned by them. Therefore, they can edit
-    and delete said items within those categories. 
+    and delete said items within those categories.
     """
     __tablename__ = 'item'
     id = Column(Integer, primary_key = True)
     name = Column(String(60), nullable = False)
     description = Column(String(250))
-    image = Columb(String(250))
+    image = Column(String(250))
     category_id = Column(Integer, ForeignKey('category.id'))
     category = relationship(Category)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+
+    @property
+    def serialize(self):
+       """Return Item object data in easily serializeable format"""
+       return {
+           'id'         : self.id,
+           'name'       : self.name,
+           'description': self.description,
+           'image'      : self.image
+       }
 
 engine = create_engine('sqlite://catalog.db')
 Base.metadata.create_all(engine)
