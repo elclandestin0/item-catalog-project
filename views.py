@@ -29,12 +29,26 @@ app = Flask(__name__)
 @app.route('/catalog')
 def showCategories():
     categories = session.query(Category).order_by(asc(Category.name))
-    output=''
+    output = ''
     for category in categories:
         output += category.name
         output += "<br>"
         output += str(category.id)
     return output
+
+@app.route('/catalog/category/<int:category_id>')
+def showItems(category_id):
+    category = session.query(Category).filter_by(id = category_id).one()
+    items = session.query(Item).filter_by(category_id = category.id).all()
+    output = ''
+    for item in items:
+        output += item.name
+        output += "<br>"
+        output += item.description
+        output += "<br>"
+        output += str(item.id)
+    return output
+
 
 if __name__ == '__main__':
     app.debug = True
