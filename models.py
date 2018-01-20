@@ -43,7 +43,7 @@ class User(Base):
         # the user id to assign it to the serialized data.
         s = Serializer(secret_key, expires_in = expiration)
         return s.dumps({'id': self.id})
-        
+
     @staticmethod
     def verify_auth_token(token):
         # To verify the auth_token we generated, we serialize the secret_key,
@@ -64,11 +64,36 @@ class User(Base):
     	user_id = data['id']
     	return user_id
 
+class Category(Base):
+    """
+    We initialize the Category relation here. It contains two attributes:
+        - Name
+        - ID
+    The ID acts as a primary_key to category and as a foreign key to
+    the Item class. This is done with regards to sorting the items by category.
+    With regards to db design, consider this an open-source catalog project:
+    no user owns a  category, and any user can add as many categories as
+    they want.
+
+    For instance, A user can add 4 categories:
+        - Boxing
+        - Hiking
+        - Football
+        - Basketball
+    However, with regards to the items belonging in that category, then a user
+    would own these items in question. Hence, any user can add as many
+    categories as they want, but it goes without saying that no user can delete
+    the categories they create. The objective here is to create a catalog of
+    sports, not own them.
+    """
+    __tablename__ = 'category'
+    id = Column(Integer, primary_key = True)
+    name = Column(String(250), nullable = False)
+
+
 class Item(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key = true)
-
-class Category(Base):
 
 engine = create_engine('sqlite://catalog.db')
 Base.metadata.create_all(engine)
