@@ -11,16 +11,16 @@ class User(Base):
     """
     Here, we initialize the 'User' relation. It consists of the following
     tables:
-        - ID (primary_key)
-        - Name
+        - id (primary_key)
+        - name
         - email
         - password_hash
         - image
     """
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), index=True)
-    email = Column(String(250))
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
     image = Column(String(250))
     password_hash = Column(String(64))
     def hash_password(self, password):
@@ -67,8 +67,8 @@ class User(Base):
 class Category(Base):
     """
     We initialize the Category relation here. It contains two attributes:
-        - Name
-        - ID
+        - name
+        - id
     The ID acts as a primary_key to category and as a foreign key to
     the Item class. This is done with regards to sorting the items by category.
     With regards to db design, consider this an open-source catalog project:
@@ -92,8 +92,36 @@ class Category(Base):
 
 
 class Item(Base):
+    """
+    For the Item relation, we have the following attributes:
+        - id
+        - name
+        - description
+        - image
+        - category_id (foreign_key for the id in Category)
+        - user_id (foreign_key for the id in User)
+
+    For this relation, the item can be owned by users! This means that each
+    item belongs in a certain category and to a certain user. An example would
+    be:
+        - User creates 3 categories: Basketball, Boxing, Football
+        - User creates 3 items: Basketball shoes, Boxing gloves, Football shoes
+
+    From the example above, the user creates 3 categories, to which other users
+    can add items to. Everyone else (even the user who created the category)
+    can neither edit nor delete these categories. However, they can add items
+    within those categories and it is owned by them. Therefore, they can edit
+    and delete said items within those categories. 
+    """
     __tablename__ = 'item'
-    id = Column(Integer, primary_key = true)
+    id = Column(Integer, primary_key = True)
+    name = Column(String(60), nullable = False)
+    description = Column(String(250))
+    image = Columb(String(250))
+    category_id = Column(Integer, ForeignKey('category.id'))
+    category = relationship(Category)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
 engine = create_engine('sqlite://catalog.db')
 Base.metadata.create_all(engine)
