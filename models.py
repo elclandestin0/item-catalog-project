@@ -1,12 +1,13 @@
-from sqlalchemy import Column,Integer,String
+from sqlalchemy import Column,Integer,String,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
 from passlib.apps import custom_app_context as pwd_context
-Base = declarative_base()
-secret_key = ''.join(random.choice(string.ascii_uppercase() +
-                string.digits) for x in xrange(32))
+import random, string
+from itsdangerous import(TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
+Base = declarative_base()
+secret_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
 class User(Base):
     """
     Here, we initialize the 'User' relation. It consists of the following
@@ -55,11 +56,9 @@ class User(Base):
     		data = s.loads(token)
     	except SignatureExpired:
     		#Valid Token, but expired
-            print "Expired token!"
     		return None
     	except BadSignature:
     		#Invalid Token
-            print "Invalid token!"
     		return None
     	user_id = data['id']
     	return user_id
@@ -70,7 +69,7 @@ class User(Base):
            'id'         : self.id,
            'name'       : self.name,
            'email'      : self.email,
-           'password_hash': self.password_hash
+           'password_hash': self.password_hash,
            'image'      : self.image
        }
 
@@ -152,5 +151,5 @@ class Item(Base):
            'image'      : self.image
        }
 
-engine = create_engine('sqlite://catalog.db')
+engine = create_engine('sqlite:///catalog.db')
 Base.metadata.create_all(engine)
