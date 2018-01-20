@@ -28,6 +28,11 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/catalog')
 def showCategories():
+    """
+    In showCategories() we query all the categories in the catalog.db, fetch
+    them by name and ID, store it in an output string then return that output
+    string to be rendered in the URI path '/' or '/catalog'
+    """
     categories = session.query(Category).order_by(asc(Category.name))
     output = ''
     for category in categories:
@@ -38,6 +43,13 @@ def showCategories():
 
 @app.route('/catalog/category/<int:category_id>')
 def showItems(category_id):
+    """
+    In showItems() we query the category that we click (by ID). After
+    successfully fetching that category in question, we then query all the
+    items that belong in that category (by category_id) then fetch the name and
+    description of each item before returning the output. This output is
+    rendered in the path '/catalog/category/<int:category_id>'
+    """
     category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(Item).filter_by(category_id = category.id).all()
     output = ''

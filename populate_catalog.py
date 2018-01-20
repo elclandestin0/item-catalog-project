@@ -7,6 +7,8 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+# Create basketball as a category and assign a basketball shoes as  an item in
+#the basketball category to test if database is running properly
 basketball_category = Category(name = "Basketball")
 session.add(basketball_category)
 session.commit()
