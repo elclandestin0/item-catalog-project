@@ -122,12 +122,6 @@ class Item(Base):
     be:
         - User creates 3 categories: Basketball, Boxing, Football
         - User creates 3 items: Basketball shoes, Boxing gloves, Football shoes
-
-    From the example above, the user creates 3 categories, to which other users
-    can add items to. Everyone else (even the user who created the category)
-    can neither edit nor delete these categories. However, they can add items
-    within those categories and it is owned by them. Therefore, they can edit
-    and delete said items within those categories.
     """
     __tablename__ = 'item'
     id = Column(Integer, primary_key = True)

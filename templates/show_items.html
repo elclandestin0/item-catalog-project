@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <h1> {{category.name}} items </h1>
+    {% for item in items %}
+    <p>{{item.name}}</p>
+    <p>{{item.description}}</p>
+    <br>
+    {% endfor %}
+    <a href ='{{url_for("showSportCategories")}}'> Back </a>
+  </body>
+</html>

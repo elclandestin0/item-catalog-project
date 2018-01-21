@@ -53,7 +53,7 @@ def newSportCategory():
         return redirect(url_for('showSportCategories'))
     else:
         return render_template('new_category.html')
- 
+
 @app.route('/categories/<int:category_id>/edit/', methods=['GET','POST'])
 def editSportCategory(category_id):
     """
@@ -80,7 +80,9 @@ def deleteSportCategory(category_id):
     if request.method == 'POST':
         session.delete(delete_category)
         session.commit()
-        return redirect(url_for('showSportCategories', category_id = category_id))
+        return redirect(url_for('showSportCategories',
+                                category_id = category_id)
+                                )
     else:
         return render_template('delete_category.html', category = delete_category)
 
@@ -95,14 +97,10 @@ def showItems(category_id):
     """
     category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(Item).filter_by(category_id = category.id).all()
-    output = ''
-    for item in items:
-        output += item.name
-        output += "<br>"
-        output += item.description
-        output += "<br>"
-        output += str(item.id)
-    return output
+    # add logic gate for user login
+    return render_template('show_items.html',
+                            items = items,
+                            category = category)
 
 
 if __name__ == '__main__':
