@@ -86,6 +86,7 @@ def deleteSportCategory(category_id):
     else:
         return render_template('delete_category.html', category = delete_category)
 
+@app.route('/categories/<int:category_id>/')
 @app.route('/categories/<int:category_id>/showitems')
 def showItems(category_id):
     """
@@ -124,6 +125,23 @@ def newItem(category_id):
     else:
         return render_template('new_item.html', category = category)
 
+@app.route('/categories/<int:category_id>/edititem/<int:item_id>',
+            methods=['GET','POST'])
+def editItem(category_id, item_id):
+    # add user login logic here
+    category = session.query(Category).filter_by(id = category_id).one()
+    item = session.query(Category).filter_by(id = item_id).one()
+    if request.method == "POST":
+        if request.form['name']:
+            item.name = request.form['name']
+        if request.form['description']:
+            item.name = request.form['description']
+        # add photo gate here
+        return redirect(url_for('showItems', category_id = category_id))
+    else:
+        return render_template('edit_item.html',
+                               category = category,
+                               item = item)
 
 if __name__ == '__main__':
     app.debug = True
