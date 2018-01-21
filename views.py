@@ -34,7 +34,8 @@ def showSportCategories():
     string to be rendered in the URI path '/' or '/catalog'
     """
     categories = session.query(Category).order_by(asc(Category.name))
-    # add logic gate to check for username logging in here.
+    # add logic gate to check for username logging in here. if true, then
+    # show only public categories!
     return render_template('all_categories.html', categories = categories)
 
 # add login required here
@@ -42,8 +43,7 @@ def showSportCategories():
 def newSportCategory():
     """
     In newCatalog(), we want to create a new catalog with a name. It should be
-    noted that a user must be logged in to create a new catalog. However, a
-    user cannot delete or edit the catalog item as he doesn't own the sport.
+    noted that a user must be logged in to create a new catalog.
     """
     # add logic gate to check user name
     if request.method == 'POST':
@@ -54,6 +54,20 @@ def newSportCategory():
     else:
         return render_template('new_category.html')
 
+@app.route('/categories/<int:category_id>/edit/', methods=['GET','POST'])
+def editSportCategory(category_id):
+    """
+    In editSportCategory(), a user can edit the name of their sport category
+    only if they're logged in, of course.
+    """
+    # add user login logic gate here.
+    edit_category = session.query(Category).filter_by(id=category_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            edit_category.name = request.form['name']
+            return redirect(url_for('showSportCategories'))
+    else:
+        return render_template('edit_category.html', category = edit_category)
 
 
 @app.route('/catalog/category/<int:category_id>')

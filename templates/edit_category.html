@@ -1,0 +1,10 @@
+<html>
+  <body>
+    <h1> Edit {{category.name}}</h1>
+    <form action='{{url_for("editSportCategory", category_id = category.id)}}' method='post'>
+      <input type='text' name = 'name' size='50' placeholder='{{category.name}}'>
+      <input type='submit' value='Edit'>
+    </form>
+    <a href='{{url_for("showSportCategories")}}'> Cancel </a>
+  </body>
+</html>

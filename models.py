@@ -81,19 +81,17 @@ class Category(Base):
     The ID acts as a primary_key to category and as a foreign key to
     the Item class. This is done with regards to sorting the items by category.
     With regards to db design, consider this an open-source catalog project:
-    no user owns a  category, and any user can add as many categories as
-    they want.
+    A user can login and create his/her own sport categories, edit them
+    and delete them. A user can add as many categories as they want, as long
+    as they are logged in!
 
     For instance, A user can add 4 categories:
         - Boxing
         - Hiking
         - Football
         - Basketball
-    However, with regards to the items belonging in that category, then a user
-    would own these items in question. Hence, any user can add as many
-    categories as they want, but it goes without saying that no user can delete
-    the categories they create. The objective here is to create a catalog of
-    sports, not own them.
+    If a user isn't logged in, then he/she will only see the public categories
+    as examples.
     """
     __tablename__ = 'category'
     id = Column(Integer, primary_key = True)
