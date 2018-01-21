@@ -128,20 +128,51 @@ def newItem(category_id):
 @app.route('/categories/<int:category_id>/edititem/<int:item_id>',
             methods=['GET','POST'])
 def editItem(category_id, item_id):
+    """
+    In editItem() we query the category the item is in and the item that we
+    clicked on. When we are done editing (done in the editItem.html), we parse
+    the name, description and photo into the item from the request and
+    go back to the list of items in that category to show us the new edited
+    item.
+    """
+
     # add user login logic here
     category = session.query(Category).filter_by(id = category_id).one()
-    item = session.query(Category).filter_by(id = item_id).one()
+    item = session.query(Item).filter_by(id = item_id).one()
     if request.method == "POST":
         if request.form['name']:
             item.name = request.form['name']
         if request.form['description']:
-            item.name = request.form['description']
+            item.description = request.form['description']
         # add photo gate here
         return redirect(url_for('showItems', category_id = category_id))
     else:
         return render_template('edit_item.html',
                                category = category,
                                item = item)
+
+@app.route('/categories/<int:category_id>/deleteitem/<int:item_id>',
+            methods=['GET','POST'])
+def deleteItem(category_id, item_id):
+    """
+    In deleteItem() we query the category the item is in and the item that we
+    clicked on. This takes us to a html page that asks us a question (whether
+    we want to delete the item or not). If we hit yes, the session.delete(item)
+    method is invoked, and we commit it to the database. This takes us back to
+    the showItems page, showing us that the item has been successfully deleted.
+    """
+    # add user login logic here
+    category = session.query(Category).filter_by(id = category_id).one()
+    item = session.query(Item).filter_by(id = item_id).one()
+    if request.method == "POST":
+        session.delete(item)
+        session.commit()
+        return redirect(url_for('showItems', category_id = category_id))
+    else:
+        return render_template('delete_item.html',
+                               category = category,
+                               item = item)
+
 
 if __name__ == '__main__':
     app.debug = True
