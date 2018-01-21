@@ -1,5 +1,5 @@
 from models import Base, User, Item, Category
-from flask import Flask, jsonify, request, url_for, abort, g, render_template
+from flask import Flask, jsonify, request, url_for, abort, g, render_template, redirect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine, asc
@@ -26,8 +26,8 @@ app = Flask(__name__)
 
 # Show categories
 @app.route('/')
-@app.route('/catalog')
-def showCategories():
+@app.route('/categories/')
+def showSportCategories():
     """
     In showCategories() we query all the categories in the catalog.db, fetch
     them by name and ID, store it in an output string then return that output
@@ -37,9 +37,27 @@ def showCategories():
     output = ''
     for category in categories:
         output += category.name
-        output += "<br>"
-        output += str(category.id)
+        output += "<br><br>"
     return output
+
+# add login required here
+@app.route('/categories/new', methods=['GET','POST'])
+def newSportCategory():
+    """
+    In newCatalog(), we want to create a new catalog with a name. It should be
+    noted that a user must be logged in to create a new catalog. However, a
+    user cannot delete or edit the catalog item as he doesn't own the sport.
+    """
+    # add logic gate to check user name
+    if request.method == 'POST':
+        new_sport = Category(name = request.form['name'])
+        session.add(new_sport)
+        session.commit()
+        return redirect(url_for('showSportCategories'))
+    else:
+        return render_template('new_category.html')
+
+
 
 @app.route('/catalog/category/<int:category_id>')
 def showItems(category_id):
@@ -48,7 +66,7 @@ def showItems(category_id):
     successfully fetching that category in question, we then query all the
     items that belong in that category (by category_id) then fetch the name and
     description of each item before returning the output. This output is
-    rendered in the path '/catalog/category/<int:category_id>'
+    rendered in the path '/catalog/category/<int:category_id>'.
     """
     category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(Item).filter_by(category_id = category.id).all()
