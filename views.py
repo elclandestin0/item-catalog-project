@@ -39,7 +39,7 @@ def showSportCategories():
     return render_template('all_categories.html', categories = categories)
 
 # add login required here
-@app.route('/categories/new', methods=['GET','POST'])
+@app.route('/categories/newcategory', methods=['GET','POST'])
 def newSportCategory():
     """
     In newCatalog(), we want to create a new catalog with a name. It should be
@@ -54,7 +54,7 @@ def newSportCategory():
     else:
         return render_template('new_category.html')
 
-@app.route('/categories/<int:category_id>/edit/', methods=['GET','POST'])
+@app.route('/categories/<int:category_id>/editcategory/', methods=['GET','POST'])
 def editSportCategory(category_id):
     """
     In editSportCategory(), a user can edit the name of their sport category
@@ -69,7 +69,7 @@ def editSportCategory(category_id):
     else:
         return render_template('edit_category.html', category = edit_category)
 
-@app.route('/categories/<int:category_id>/delete/', methods=['GET','POST'])
+@app.route('/categories/<int:category_id>/deletecategory/', methods=['GET','POST'])
 def deleteSportCategory(category_id):
     """
     In deleteSportCategory(), a user can delete the sport category they wish if
@@ -86,7 +86,7 @@ def deleteSportCategory(category_id):
     else:
         return render_template('delete_category.html', category = delete_category)
 
-@app.route('/catalog/category/<int:category_id>')
+@app.route('/categories/<int:category_id>/showitems')
 def showItems(category_id):
     """
     In showItems() we query the category that we click (by ID). After
@@ -101,6 +101,28 @@ def showItems(category_id):
     return render_template('show_items.html',
                             items = items,
                             category = category)
+
+@app.route('/categories/<int:category_id>/createitem/', methods=['GET','POST'])
+def newItem(category_id):
+    """
+    In newItem(), we query the category_id that we selected, render the html
+    template to 'new_item.html', add a new name, description and image, then
+    return to the category item menu to show the new item we just created!
+    """
+    # add username logic here
+    category = session.query(Category).filter_by(id = category_id).one()
+    if request.method == 'POST':
+        new_item = Item(
+            name = request.form['name'],
+            description = request.form['description'],
+            category = category
+            # add image here to be parsed from form here
+            )
+        session.add(new_item)
+        session.commit()
+        return redirect(url_for('showItems', category_id = category_id))
+    else:
+        return render_template('new_item.html', category = category)
 
 
 if __name__ == '__main__':

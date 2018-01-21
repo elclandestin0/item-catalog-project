@@ -1,9 +1,11 @@
 <html>
   <body>
     <h1> {{category.name}} items </h1>
+    <p> <a href = "{{url_for('newItem', category_id = category.id)}}"> Create New Item Here </a><br>
     {% for item in items %}
     <p>{{item.name}}</p>
     <p>{{item.description}}</p>
+    <p>{{item.id}}
     <br>
     {% endfor %}
     <a href ='{{url_for("showSportCategories")}}'> Back </a>

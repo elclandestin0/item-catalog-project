@@ -9,13 +9,4 @@ session = DBSession()
 
 # Create basketball as a category and assign a basketball shoes as  an item in
 #the basketball category to test if database is running properly
-basketball_category = Category(name = "Basketball")
-session.add(basketball_category)
-session.commit()
-
-basketball_shoes = Item(name="Air Jordan",
-                        description = "Fly high!",
-                        category = basketball_category
-                        )
-session.add(basketball_shoes)
-session.commit()
+items = session.query(Item).all()
