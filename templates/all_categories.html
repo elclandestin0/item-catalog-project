@@ -1,0 +1,9 @@
+<html>
+  <body>
+    <h1> Catalog of Sport Items </h1>
+    <a href='{{url_for("newSportCategory")}}'> Create New Sport </a>
+    {% for category in categories %}
+    <p>{{category.name}}</p>
+    {% endfor %}
+  </body>
+</html>

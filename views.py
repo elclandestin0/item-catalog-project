@@ -34,11 +34,8 @@ def showSportCategories():
     string to be rendered in the URI path '/' or '/catalog'
     """
     categories = session.query(Category).order_by(asc(Category.name))
-    output = ''
-    for category in categories:
-        output += category.name
-        output += "<br><br>"
-    return output
+    # add logic gate to check for username logging in here.
+    return render_template('all_categories.html', categories = categories)
 
 # add login required here
 @app.route('/categories/new', methods=['GET','POST'])
