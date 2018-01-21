@@ -53,7 +53,7 @@ def newSportCategory():
         return redirect(url_for('showSportCategories'))
     else:
         return render_template('new_category.html')
-
+ 
 @app.route('/categories/<int:category_id>/edit/', methods=['GET','POST'])
 def editSportCategory(category_id):
     """
@@ -69,6 +69,20 @@ def editSportCategory(category_id):
     else:
         return render_template('edit_category.html', category = edit_category)
 
+@app.route('/categories/<int:category_id>/delete/', methods=['GET','POST'])
+def deleteSportCategory(category_id):
+    """
+    In deleteSportCategory(), a user can delete the sport category they wish if
+    they are logged in to the web application.
+    """
+    # add user login logic gate here.
+    delete_category = session.query(Category).filter_by(id = category_id).one()
+    if request.method == 'POST':
+        session.delete(delete_category)
+        session.commit()
+        return redirect(url_for('showSportCategories', category_id = category_id))
+    else:
+        return render_template('delete_category.html', category = delete_category)
 
 @app.route('/catalog/category/<int:category_id>')
 def showItems(category_id):

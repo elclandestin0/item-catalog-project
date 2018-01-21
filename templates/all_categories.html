@@ -3,7 +3,9 @@
     <h1> Catalog of Sport Items </h1>
     <a href='{{url_for("newSportCategory")}}'> Create New Sport </a>
     {% for category in categories %}
-    <p>{{category.name}} <a href='{{url_for("editSportCategory", category_id = category.id)}}'> Edit </a> </p>
+    <p>{{category.name}} </p>
+    <p> <a href='{{url_for("editSportCategory", category_id = category.id)}}'> Edit </a>  <a href='{{url_for("deleteSportCategory", category_id = category.id)}}'> Delete </a> </p>
+    <br>
     {% endfor %}
   </body>
 </html>
