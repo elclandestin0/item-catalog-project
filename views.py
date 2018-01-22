@@ -173,6 +173,21 @@ def deleteItem(category_id, item_id):
                                category = category,
                                item = item)
 
+@app.route('/categories/<int:category_id>/showitems/JSON')
+def showItemsJSON(category_id):
+    """This method serializes the sport items of a category into a JSON file"""
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return jsonify(Items=[item.serialize for item in items])
+
+
+@app.route('/categories/JSON')
+def showCategoriesJSON():
+    """This method serializes all the restaurants in the database into a JSON
+    file"""
+    categories = session.query(Category).all()
+    return jsonify(categories=[category.serialize for category in categories])
+
 
 if __name__ == '__main__':
     app.debug = True
