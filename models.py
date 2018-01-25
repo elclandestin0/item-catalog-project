@@ -7,7 +7,8 @@ import random, string
 from itsdangerous import(TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 Base = declarative_base()
-secret_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+secret_key = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                for x in xrange(32))
 class User(Base):
     """
     Here, we initialize the 'User' relation. It consists of the following

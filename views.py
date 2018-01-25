@@ -23,8 +23,14 @@ session = DBSession()
 app = Flask(__name__)
 
 # LOAD CLIENT_ID BY PARSING IT FROM CLIENT_SECRETS.JSON (from google)
-
+CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
+    
 # Show categories
+@app.route('/login')
+def login():
+
+
 @app.route('/')
 @app.route('/categories/')
 def showSportCategories():
@@ -87,7 +93,7 @@ def deleteSportCategory(category_id):
         return render_template('delete_category.html', category = delete_category)
 
 @app.route('/categories/<int:category_id>/')
-@app.route('/categories/<int:category_id>/showitems')
+@app.route('/categories/<int:category_id>/items')
 def showItems(category_id):
     """
     In showItems() we query the category that we click (by ID). After
@@ -173,7 +179,7 @@ def deleteItem(category_id, item_id):
                                category = category,
                                item = item)
 
-@app.route('/categories/<int:category_id>/showitems/JSON')
+@app.route('/categories/<int:category_id>/items/JSON')
 def showItemsJSON(category_id):
     """This method serializes the sport items of a category into a JSON file"""
     category = session.query(Category).filter_by(id=category_id).one()
