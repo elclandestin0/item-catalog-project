@@ -27,24 +27,20 @@
     </p>
   </div>
 </div>
-<div class="row mt-3">
-            <div class="col-1">
-              <img src="../images/basketball.png">
-            </div>
-            {%for category in categories%}
+<div class="row">
+            {% for category in categories %}
             <div class="col-md-5 col-lg-5 col-xs-9">
                <div class="card bg-light text-dark">
-                  <img class="card-img" src="images/basketball.png" alt="Basketball image">
+                  <img class="card-img" src="{{url_for('static', filename='basketball.png')}}">
                   <div class="card-img-overlay">
-                     <p class="card-text center"><a href="https://www.github.com/mkhoury93/reb00t"> <i class="fa fa-github fa-4x" aria-hidden="true"></i></a></p>
-                     <h4 class="card-title center">{{category.name}}</h4>
-                     <p class="card-text center"> Metal Gear Solid meets TRON in this stealth-aholic shooter! </p>
+                     <p class="card-title center">{{category.name}}</p>
+                     <p class="card-text center"> Insert description here</p>
+                     <p><a href='{{url_for("editSportCategory", category_id = category.id)}}'> Edit </a>  <a href='{{url_for("deleteSportCategory", category_id = category.id)}}'> Delete </a> </p>
                   </div>
                </div>
             </div>
+            <div class="col-1"></div>
+            {% endfor %}
           </div>
-          {% endfor %}
-{% for category in categories %}
-<p><a href='{{url_for("editSportCategory", category_id = category.id)}}'> Edit </a>  <a href='{{url_for("deleteSportCategory", category_id = category.id)}}'> Delete </a> </p>
-{% endfor %}
+
 {% endblock %}
