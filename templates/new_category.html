@@ -2,10 +2,9 @@
 {% block content %}
     <h1> Create new sport category</h1>
     <form action='{{url_for("newSportCategory")}}' method='post'>
-      <p> Name: </p>
-      <input type='text' size='100' name='name' placeholder="New sport category name here">
-      <input type='text' size='100' name='description' placeholder="Insert description here">
+      <p> Name: </p><input type='text' size='100' name='name' placeholder="New sport category name here">
+      <p> Description: </p> <input type='text' size='100' name='description' placeholder="Insert description here">
       <input type='submit' value='Create'>
-      <a href='{{url_for("showSportCategories")}}'> Cancel </a>
+      <a href='{{url_for("showSportCategories")}}'> cancel </a>
     </form>
 {% endblock %}

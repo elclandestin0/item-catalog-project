@@ -2,7 +2,7 @@
 {% block content %}
 <!--begin navbar-->
 <div class="row">
-   <div class="col-12 right">
+   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align right">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
          <a class="navbar-brand" href="#">
             <h2> sport items catalog </h2>
@@ -10,18 +10,11 @@
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
-         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-               <a class="nav-item nav-link active" href="#">home<span class="sr-only">(current)</span></a>
-               <a class="nav-item nav-link" href="#"> projects</a>
-               <a class="nav-item nav-link" href="#">contact </a>
-            </div>
-         </div>
       </nav>
    </div>
 </div>
 <div class="row">
-  <div class="col-12">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <p class="text-right">
       <a href='{{url_for("newSportCategory")}}'> create new sport </a>
     </p>
@@ -29,18 +22,16 @@
 </div>
 <div class="row">
             {% for category in categories %}
-            <div class="col-md-5 col-lg-5 col-xs-9">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-xs-14">
                <div class="card bg-light text-dark">
                   <img class="card-img" src="{{url_for('static', filename='basketball.png')}}">
                   <div class="card-img-overlay">
                      <p class="card-title center"><a href='{{url_for("showItems",category_id=category.id)}}'>{{category.name}}</a></p>
                      <p class="card-text center"> {{category.description}}</p>
-                     <p><a href='{{url_for("editSportCategory", category_id = category.id)}}'> Edit </a>  <a href='{{url_for("deleteSportCategory", category_id = category.id)}}'> Delete </a> </p>
+                     <p><a href='{{url_for("editSportCategory", category_id = category.id)}}'> edit </a>  <a href='{{url_for("deleteSportCategory", category_id = category.id)}}'> delete </a> </p>
                   </div>
                </div>
             </div>
-            <div class="col-1"></div>
             {% endfor %}
           </div>
-
 {% endblock %}

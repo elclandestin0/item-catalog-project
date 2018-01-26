@@ -9,11 +9,34 @@
 
     Last modified: November 17th, 2017 @ 8:28 AM
 */
+html {
+  font-size: 14px;
+}
+
+@include media-breakpoint-up(sm) {
+  html,body {
+    font-size: 16px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html,body {
+    font-size: 20px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html,body {
+    font-size: 28px;
+  }
+}
+
+
 html,
 body {
     height: 100%;
     margin: 0;
-    font-family: monospace, sans-serif;
+    /*font-family: monospace, sans-serif;*/
 }
 
 .container {

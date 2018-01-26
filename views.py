@@ -58,7 +58,7 @@ def newSportCategory():
     In newCatalog(), we want to create a new catalog with a name. It should be
     noted that a user must be logged in to create a new catalog.
     """
-    # add logic gate to check user name
+    # add logic gate  to check user name
     if request.method == 'POST':
         new_sport = Category(name = request.form['name'],
                              description =request.form['description']

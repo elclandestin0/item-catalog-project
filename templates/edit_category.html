@@ -1,10 +1,19 @@
 {% extends "main-block.html" %}
 {% block content %}
-    <h1> edit {{category.name}}</h1>
+<div class="row">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
+    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
+      <h1> edit {{category.name}}</h1>
+    </div>
     <form action='{{url_for("editSportCategory", category_id = category.id)}}' method='post'>
+      <div class="col-xs-6">
       <input type='text' name = 'name' size='100' placeholder='{{category.name}}'>
+      </div>
+      <div class="col-xs-6">
       <input type='text' name = 'description' size='100' placeholder='{{category.description}}'>
       <input type='submit' value='Edit'>
+      </div>
     </form>
     <a href='{{url_for("showSportCategories")}}'> Cancel </a>
+</div>
 {% endblock %}
