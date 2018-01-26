@@ -1,0 +1,109 @@
+/*
+    Code written by: Memo Khoury
+    withthe media query from a good
+    fellow @ Stack Overflow, and the
+    footer is from CSS styles[1] as well!
+
+    Footnote:
+    [1]: https://css-tricks.com/couple-takes-sticky-footer/
+
+    Last modified: November 17th, 2017 @ 8:28 AM
+*/
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: monospace, sans-serif;
+}
+
+.container {
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+
+.header {
+    font-size: 35px;
+}
+
+.mobile-text {
+    font-size: 20px;
+}
+
+.small-text {
+    font-size: 10px;
+}
+
+a {
+    color: gray;
+}
+
+a:hover {
+    color: black;
+}
+h1 {
+  color: black;
+}
+
+.center {
+    text-align: center;
+}
+
+.newspaper-margin-left {
+    margin-left: 17.5px;
+}
+
+.newspaper-margin-right {
+    margin-right: 17.5px;
+}
+
+.newspaper-text-size {
+    font-size: 15px;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.nav {
+    text-align: center;
+}
+
+.fa {
+    font-family: "FontAwesome";
+}
+
+.max-width {
+    width: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+}
+
+.footer,
+.push {
+    height: 60px;
+    bottom: 0;
+    position: absolute;
+}
+
+img {
+    opacity: 0.2;
+}
+
+img:hover {
+    opacity: 1.0;
+}
+
+.card {
+    overflow: hidden;
+}
+
+.card-title,
+.card-text {
+    word-wrap: break-word;
+}
