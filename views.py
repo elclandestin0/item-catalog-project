@@ -60,7 +60,9 @@ def newSportCategory():
     """
     # add logic gate to check user name
     if request.method == 'POST':
-        new_sport = Category(name = request.form['name'])
+        new_sport = Category(name = request.form['name'],
+                             description =request.form['description']
+                             )
         session.add(new_sport)
         session.commit()
         return redirect(url_for('showSportCategories'))
@@ -78,6 +80,8 @@ def editSportCategory(category_id):
     if request.method == 'POST':
         if request.form['name']:
             edit_category.name = request.form['name']
+        if request.form['description']:
+            edit_category.description = request.form['description']
             return redirect(url_for('showSportCategories'))
     else:
         return render_template('edit_category.html', category = edit_category)
