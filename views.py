@@ -16,7 +16,7 @@ import requests
 
 auth = HTTPBasicAuth()
 engine = create_engine('sqlite:///catalog.db')
- 
+
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -46,7 +46,7 @@ def showSportCategories():
     them by name and ID, store it in an output string then return that output
     string to be rendered in the URI path '/' or '/catalog'
     """
-    categories = session.query(Category).order_by(asc(Category.name))
+    categories = session.query(Category).all()
     # add logic gate to check for username logging in here. if true, then
     # show only public categories!
     return render_template('all_categories.html', categories = categories)
