@@ -23,8 +23,8 @@ session = DBSession()
 app = Flask(__name__)
 
 # LOAD CLIENT_ID BY PARSING IT FROM CLIENT_SECRETS.JSON (from google)
-CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+# CLIENT_ID = json.loads(
+    # open('client_secrets.json', 'r').read())['web']['client_id']
 
 @app.route('/home')
 def showHome():
