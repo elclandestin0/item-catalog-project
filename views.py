@@ -220,10 +220,8 @@ def showSportCategories():
     # add logic gate to check for username logging in here. if true, then
     # show only public categories!
     if 'username' not in login_session:
-        print ("you are now in the main page and you are not logged in")
-        return render_template('public_categories.html', categories=categories)
+        return render_template('public_categories.html', categories = categories)
     else:
-        print ("You are logged in")
         return render_template('all_categories.html', categories = categories)
 
 # add login required here
@@ -301,9 +299,13 @@ def showItems(category_id):
     """
     category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(Item).filter_by(category_id = category.id).all()
-    return render_template('show_items.html',
-                            items = items,
-                            category = category)
+    if 'username' not in login_session:
+        return render_template('public_items.html', items = items,
+                                category = category)
+    else:
+        return render_template('show_items.html', items = items,
+                                category = category)
+
 
 @app.route('/categories/<int:category_id>/createitem/', methods=['GET','POST'])
 def newItem(category_id):

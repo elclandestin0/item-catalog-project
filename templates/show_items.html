@@ -8,7 +8,8 @@
       </div>
       <div class="col-6">
         <p class="text-right">
-          <a href='{{url_for("newItem", category_id = category.id)}}'> create new item </a>
+          <a href='{{url_for("newItem", category_id = category.id)}}'> create new item </a> <br>
+          <a href="{{url_for('disconnect')}}"> logout </a>
         </p>
       </div>
     </div>
