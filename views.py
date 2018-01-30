@@ -258,7 +258,7 @@ def editSportCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     if edit_category.user_id != login_session['user_id']:
-        return "Unauthorized"
+        return "Unauthorized! Go back to sport categories."
     if request.method == 'POST':
         if request.form['name']:
             edit_category.name = request.form['name']
@@ -279,7 +279,7 @@ def deleteSportCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     if delete_category.user_id != login_session['user_id']:
-        return "Unauthorized! Go back to sport categories" 
+        return "Unauthorized! Go back to sport categories."
     if request.method == 'POST':
         session.delete(delete_category)
         session.commit()
@@ -301,7 +301,6 @@ def showItems(category_id):
     """
     category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(Item).filter_by(category_id = category.id).all()
-    # add logic gate for user login
     return render_template('show_items.html',
                             items = items,
                             category = category)
@@ -315,6 +314,8 @@ def newItem(category_id):
     """
     # add username logic here
     category = session.query(Category).filter_by(id = category_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         new_item = Item(
             name = request.form['name'],
@@ -342,6 +343,10 @@ def editItem(category_id, item_id):
     # add user login logic here
     category = session.query(Category).filter_by(id = category_id).one()
     item = session.query(Item).filter_by(id = item_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if category.user_id != login_session['user_id']:
+        return "Unauthorized! Go back to items page."
     if request.method == "POST":
         if request.form['name']:
             item.name = request.form['name']
@@ -367,6 +372,10 @@ def deleteItem(category_id, item_id):
     # add user login logic here
     category = session.query(Category).filter_by(id = category_id).one()
     item = session.query(Item).filter_by(id = item_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if category.user_id != login_session['user_id']:
+        return "Unauthorized! Go back to items page."
     if request.method == "POST":
         session.delete(item)
         session.commit()
