@@ -1,10 +1,40 @@
 {% extends "main-block.html" %}
 {% block content %}
-    <h1> Create new sport category</h1>
-    <form action='{{url_for("newSportCategory")}}' method='post'>
-      <p> Name: </p><input type='text' size='100' name='name' placeholder="New sport category name here">
-      <p> Description: </p> <input type='text' size='100' name='description' placeholder="Insert description here">
-      <input type='submit' value='Create'>
-      <a href='{{url_for("showSportCategories")}}'> cancel </a>
-    </form>
+<div class="row">
+   <div class="col-sm-offset-12">
+      <h1> Create new sport category</h1>
+   </div>
+</div>
+<form action='{{url_for("newSportCategory")}}' method='post'>
+   <div class="form-row">
+      <div class="col-xs-2 col-sm-2 mb-3">
+         <label>name</label>
+      </div>
+      <div class="col-10 mb-3">
+        <input type='text' name = 'name' size='100' placeholder='enter sport name here'>
+      </div>
+      <div class="col-xs-2 col-sm-2 mb-3">
+          <label>description</label>
+      </div>
+      <div class="col-10 mb-3">
+          <input type='text' name = 'description' size='100' placeholder='enter sport description here'>
+      </div>
+      <div class="col-xs-2 col-sm-2 mb-3">
+      <input type='submit' value='create'><br>
+      </div>
+      <div class="col-2">
+        <a href='{{url_for("showSportCategories")}}'> Cancel </a>
+      </div>
+      </div>
+</form>
 {% endblock %}
+
+
+
+<h1> Create new sport category</h1>
+<form action='{{url_for("newSportCategory")}}' method='post'>
+  <p> Name: </p><input type='text' size='100' name='name' placeholder="New sport category name here">
+  <p> Description: </p> <input type='text' size='100' name='description' placeholder="Insert description here">
+  <input type='submit' value='Create'>
+  <a href='{{url_for("showSportCategories")}}'> cancel </a>
+</form>

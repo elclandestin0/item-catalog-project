@@ -23,20 +23,8 @@ session = DBSession()
 app = Flask(__name__)
 
 # LOAD CLIENT_ID BY PARSING IT FROM CLIENT_SECRETS.JSON (from google)
-# CLIENT_ID = json.loads(
-    # open('client_secrets.json', 'r').read())['web']['client_id']
-
-@app.route('/home')
-def showHome():
-    categories = session.query(Category).order_by(asc(Category.name))
-    #add logic gate for public restaurant or private login
-    return render_template('publicmenu.html', categories = categories)
-
-# Show login page with oauth provider options
-@app.route('/login')
-def login():
-    return null
-
+CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
+print CLIENT_ID
 
 @app.route('/')
 @app.route('/categories/')

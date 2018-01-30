@@ -114,6 +114,15 @@ h1 {
     position: absolute;
 }
 
+.black {
+  color:  black;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
 img {
     opacity: 0.2;
 }

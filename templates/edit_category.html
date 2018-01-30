@@ -1,40 +1,30 @@
 {% extends "main-block.html" %}
 {% block content %}
 <div class="row">
-   <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
-   <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 col-xl-11">
+   <div class="col-sm-offset-12">
       <h1> edit {{category.name}}</h1>
    </div>
 </div>
 <form action='{{url_for("editSportCategory", category_id = category.id)}}' method='post'>
    <div class="form-row">
-      <div class="col-12 mb-3">
+      <div class="col-xs-2 col-sm-2 mb-3">
          <label>name</label>
-         <input type='text' name = 'name' size='100' placeholder='{{category.name}}'>
       </div>
-      <div class="col-12 mb-3">
+      <div class="col-10 mb-3">
+        <input type='text' name = 'name' size='100' placeholder='{{category.name}}'>
+      </div>
+      <div class="col-xs-2 col-sm-2 mb-3">
           <label>description</label>
+      </div>
+      <div class="col-10 mb-3">
           <input type='text' name = 'description' size='100' placeholder='{{category.description}}'>
       </div>
-
-         <input type='submit' value='Edit'>
+      <div class="col-xs-2 col-sm-2 mb-3 black">
+      <input type='submit' value='tap me to edit'><br>
       </div>
-      <a href='{{url_for("showSportCategories")}}'> Cancel </a>
+      <div class="col-2">
+        <a href='{{url_for("showSportCategories")}}'> Cancel </a>
+      </div>
+      </div>
 </form>
-
-<!-- <form action='{{url_for("editSportCategory", category_id = category.id)}}' method='post'>
-   <div class="form-row">
-     <div class="col-md-4 mb-3">
-       <label>name</label>
-       <input type="text" size='100' name='name' class="form-control is-valid" placeholder="{{category.name}}" required>
-     </div>
-     <div class="col-md-4 mb-3">
-       <label>description</label>
-       <input type="text" class="form-control is-valid" placeholder="{{category.description}}" required>
-       <div class="valid-feedback">
-         Looks good!
-       </div>
-     </div>
-       <input type='submit' value='edit'>
-   </form> -->
 {% endblock %}
