@@ -47,7 +47,6 @@ def gconnect():
     # Obtain authorization code, now compatible with Python3
     # request.get_data()
     code = request.data.decode('utf-8')
-
     try:
         # Upgrade the authorization code into a credentials object
         print "flow from clientsecrets"
@@ -61,8 +60,8 @@ def gconnect():
         return response
 
     # Check that the access token is valid.
-    print "access token"
     access_token = credentials.access_token
+    print access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
            % access_token)
     # Submit request, parse response - Python3 compatible
@@ -115,12 +114,16 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
+    login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
     user_id = getUserID(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
+        print "new user created! Hello cl" + login_session['username']
     login_session['user_id'] = user_id
+
+    print access_token
 
     output = ''
     output += '<h1>Welcome, '
@@ -132,6 +135,55 @@ def gconnect():
     flash("you are now logged in as %s" % login_session['username'])
     return output
 
+@app.route('/gdisconnect')
+def gdisconnect():
+    # Only disconnect a connected user.
+    access_token = login_session.get('access_token')
+    print access_token
+    if access_token is None:
+        print "no access token"
+        response = make_response(
+            json.dumps('Current user not connected.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[0]
+    if result['status'] == '200':
+        print "successfully disconnected"
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        print "Can't revoke token for user"
+        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+@app.route('/disconnect')
+def disconnect():
+    if 'provider' in login_session:
+        if login_session['provider'] == 'google':
+            gdisconnect()
+            print "successfully disconnected"
+            del login_session['gplus_id']
+            del login_session['access_token']
+        if login_session['provider'] == 'facebook':
+            fbdisconnect()
+            del login_session['facebook_id']
+        del login_session['provider']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        del login_session['user_id']
+        flash("You have successfully been logged out.")
+        print("Successfully logged out")
+        return redirect(url_for('showSportCategories'))
+    else:
+        print "No provider"
+        return redirect(url_for('showSportCategories'))
+
+
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
                    'email'], image=login_session['picture'])
@@ -140,6 +192,9 @@ def createUser(login_session):
     user = session.query(User).filter_by(email=login_session['email']).one()
     return user.id
 
+@app.route('/login_session')
+def printLoginSession():
+    return jsonify(login_session)
 
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
@@ -164,7 +219,12 @@ def showSportCategories():
     categories = session.query(Category).all()
     # add logic gate to check for username logging in here. if true, then
     # show only public categories!
-    return render_template('all_categories.html', categories = categories)
+    if 'username' not in login_session:
+        print ("you are now in the main page and you are not logged in")
+        return render_template('public_categories.html', categories=categories)
+    else:
+        print ("You are logged in")
+        return render_template('all_categories.html', categories = categories)
 
 # add login required here
 @app.route('/categories/newcategory', methods=['GET','POST'])
@@ -174,9 +234,12 @@ def newSportCategory():
     noted that a user must be logged in to create a new catalog.
     """
     # add logic gate  to check user name
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         new_sport = Category(name = request.form['name'],
-                             description =request.form['description']
+                             description =request.form['description'],
+                             user_id = login_session['user_id']
                              )
         session.add(new_sport)
         session.commit()
@@ -192,6 +255,10 @@ def editSportCategory(category_id):
     """
     # add user login logic gate here.
     edit_category = session.query(Category).filter_by(id=category_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if edit_category.user_id != login_session['user_id']:
+        return "Unauthorized"
     if request.method == 'POST':
         if request.form['name']:
             edit_category.name = request.form['name']
@@ -209,6 +276,10 @@ def deleteSportCategory(category_id):
     """
     # add user login logic gate here.
     delete_category = session.query(Category).filter_by(id = category_id).one()
+    if 'username' not in login_session:
+        return redirect('/login')
+    if delete_category.user_id != login_session['user_id']:
+        return "Unauthorized! Go back to sport categories" 
     if request.method == 'POST':
         session.delete(delete_category)
         session.commit()
@@ -319,6 +390,14 @@ def showCategoriesJSON():
     file"""
     categories = session.query(Category).all()
     return jsonify(categories=[category.serialize for category in categories])
+
+@app.route('/users/JSON')
+def showCategoriesJSON():
+    """This method serializes all the restaurants in the database into a JSON
+    file"""
+    users = session.query(User).all()
+    return jsonify(users=[user.serialize for user in users])
+
 
 
 if __name__ == '__main__':

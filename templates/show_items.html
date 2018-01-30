@@ -1,22 +1,5 @@
-{% extends "main-block.html" %}
+{% extends "login-main-block.html" %}
 {% block content %}
-
-    <div class="row">
-       <div class="col-12 right">
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-             <a class="navbar-brand" href="#">
-                <h2> sport items catalog </h2>
-             </a>
-             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                   <a class="nav-item nav-link active" href="#">home<span class="sr-only">(current)</span></a>
-                   <a class="nav-item nav-link" href="#"> projects</a>
-                   <a class="nav-item nav-link" href="#">contact </a>
-                </div>
-             </div>
-          </nav>
-       </div>
-    </div>
     <div class="row">
       <div class="col-6">
         <p class="text-left">
@@ -42,13 +25,13 @@
             <img class="card-img" src="{{url_for('static', filename='basketball.png')}}">
           </a>
             <div class="card-img-overlay">
-               <p class="card-title center">{{item.name}}</a></p>
-               <p class="card-text center">{{item.description}}</p>
-               <p> <a href='{{url_for("editItem", category_id = category.id, item_id = item.id)}}'> Edit </a>  <a href='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}'> Delete </a> </p>
+               <p class="card-title center">Item name: {{item.name}}</a></p>
+               <p class="card-text center">Item description: {{item.description}}</p>
+               <p class="card-text center"> <a href='{{url_for("editItem", category_id = category.id, item_id = item.id)}}'> Edit </a></p>
+               <p class="card-text center"> <a href='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}'> Delete </a> </p>
             </div>
          </div>
       </div>
-      <div class="col-1"></div>
     {% endfor %}
   </div>
 

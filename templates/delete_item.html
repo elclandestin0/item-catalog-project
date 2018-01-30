@@ -1,4 +1,4 @@
-{% extends "main-block.html" %}
+{% extends "login-main-block.html" %}
 {% block content %}
     <h1> Delete {{item.name}}?</h1>
     <form action='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}' method='post'>

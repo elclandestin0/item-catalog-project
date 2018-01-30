@@ -1,0 +1,25 @@
+{% extends "login-main-block.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <p class="text-right">
+			<a href='{{url_for("showLogin")}}'>login here</a>
+    </p>
+  </div>
+</div>
+<div class="row">
+            {% for category in categories %}
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-14">
+               <div class="card bg-light text-dark">
+                  <img class="card-img" src="{{url_for('static', filename='basketball.png')}}">
+                  <div class="card-img-overlay">
+                     <p class="card-title center"><a href='{{url_for("showItems",category_id=category.id)}}'>{{category.name}}</a></p>
+                     <p class="card-text center"> {{category.description}}</p>
+                     <p class="card-text center"><a href='{{url_for("editSportCategory", category_id = category.id)}}'> edit </a>  </p>
+                     <p class="card-text center"><a href='{{url_for("deleteSportCategory", category_id = category.id)}}'> delete </a>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+          </div>
+{% endblock %}
