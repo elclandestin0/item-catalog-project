@@ -225,15 +225,15 @@ def showSportCategories():
         return render_template('all_categories.html', categories = categories)
 
 # add login required here
-@app.route('/categories/newcategory', methods=['GET','POST'])
+@app.route('/categories/new', methods=['GET','POST'])
 def newSportCategory():
     """
     In newCatalog(), we want to create a new catalog with a name. It should be
     noted that a user must be logged in to create a new catalog.
     """
     # add logic gate  to check user name
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     if request.method == 'POST':
         new_sport = Category(name = request.form['name'],
                              description =request.form['description'],
@@ -245,7 +245,7 @@ def newSportCategory():
     else:
         return render_template('new_category.html')
 
-@app.route('/categories/<int:category_id>/editcategory/', methods=['GET','POST'])
+@app.route('/categories/<int:category_id>/edit/', methods=['GET','POST'])
 def editSportCategory(category_id):
     """
     In editSportCategory(), a user can edit the name of their sport category
@@ -266,7 +266,7 @@ def editSportCategory(category_id):
     else:
         return render_template('edit_category.html', category = edit_category)
 
-@app.route('/categories/<int:category_id>/deletecategory/', methods=['GET','POST'])
+@app.route('/categories/<int:category_id>/delete/', methods=['GET','POST'])
 def deleteSportCategory(category_id):
     """
     In deleteSportCategory(), a user can delete the sport category they wish if
