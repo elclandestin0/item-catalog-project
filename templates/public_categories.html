@@ -22,10 +22,10 @@
             <p class="card-text center">{{category.description}}</p>
             <div class="card-footer">
                {% if 'username' not in login_session %}
-               <p class="card-text right red"> unauthorized, please login <i class="fa fa-ban fa-1x"></i></p>
+               <p class="card-text center red"><i class="fa fa-ban fa-2x"></i></p>
                {% else %}
-               <p class="card-text right"><a href='{{url_for("editSportCategory", category_id = category.id)}}'><i class="fa fa-edit fa-2x space" aria-hidden="true"></i></a><a href='{{url_for("deleteSportCategory", category_id = category.id)}}'><i class="fa fa-trash fa-2x"></i></a> </p>
-               <p class="card-text right"></p>
+               <p class="card-text center"><a href='{{url_for("editSportCategory", category_id = category.id)}}'><i class="fa fa-edit fa-2x space" aria-hidden="true"></i></a><a href='{{url_for("deleteSportCategory", category_id = category.id)}}'><i class="fa fa-trash fa-2x"></i></a> </p>
+               <p class="card-text center"></p>
                {% endif %}
             </div>
           </div>
