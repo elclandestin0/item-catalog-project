@@ -25,6 +25,7 @@
              <div class="card-block">
                 <p class="card-title center">{{item.name}}</p>
                 <p class="card-text center">{{item.description}}</p>
+                <p class="card-text center">Owned by {{login_session['username']}}</p>
                 <div class="card-footer">
                   {% if category.user_id != login_session['user_id'] %}
                     <p class="card-text center"><i class="fa fa-ban fa-2x"></i></p>

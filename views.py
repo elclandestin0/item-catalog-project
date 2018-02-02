@@ -299,8 +299,6 @@ def showSportCategories():
     string to be rendered in the URI path '/' or '/catalog'
     """
     categories = session.query(Category).all()
-    # add logic gate to check for username logging in here. if true, then
-    # show only public categories!
     if 'username' not in login_session:
         return render_template('public_categories.html',
                                 categories = categories,
