@@ -182,7 +182,7 @@ def disconnect():
         return redirect(url_for('showSportCategories'))
     else:
         print "No provider"
-        return redirect(url_for('showSportCategories'))
+        return redirect(url_for('showLogin'))
 
 @app.route('/manyak')
 def force():

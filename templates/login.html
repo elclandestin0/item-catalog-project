@@ -1,18 +1,15 @@
 {% extends "login-main-block.html" %}
 {% block content %}
   <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="jumbotron">
-      <h1 class="text-left">Login</h1>
-      <p class="text-left">Choose the account you wish to login with.</p>
-      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-      <p class="text-center">
-         <a class="btn btn-google-plus-style btn-lg btn-block" href="auth/google">
-         <i class="fa fa-google-plus-square"></i>  <span>Login with <strong>Google+</strong></span>
-         </a>
-      </p>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h1 class="text-left">login</h1>
     </div>
-      <p>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <p class="text-left">choose the account you wish to login with.</p>
+    </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div id="signinButton">
            <span class="g-signin"
               data-scope="openid email"
@@ -24,7 +21,7 @@
               data-approvalprompt="force">
            </span>
         </div>
-      </p>
+    </div>
     </div>
   </div>
   </div>
