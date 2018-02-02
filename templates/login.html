@@ -1,26 +1,34 @@
 {% extends "login-main-block.html" %}
 {% block content %}
-      <div class="jumbotron">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="jumbotron">
       <h1 class="text-left">Login</h1>
       <p class="text-left">Choose the account you wish to login with.</p>
-      <p>
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+      <p class="text-center">
          <a class="btn btn-google-plus-style btn-lg btn-block" href="auth/google">
          <i class="fa fa-google-plus-square"></i>  <span>Login with <strong>Google+</strong></span>
          </a>
       </p>
     </div>
+      <p>
+        <div id="signinButton">
+           <span class="g-signin"
+              data-scope="openid email"
+              data-clientid="304725659906-tvft0hmvd12ho1820s0eo8a0efpufbva.apps.googleusercontent.com"
+              data-redirecturi="postmessage"
+              data-accesstype="offline"
+              data-cookiepolicy="single_host_origin"
+              data-callback="signInCallback"
+              data-approvalprompt="force">
+           </span>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
       <!-- GOOGLE PLUS SIGN IN-->
-      <div id="signinButton">
-         <span class="g-signin"
-            data-scope="openid email"
-            data-clientid="304725659906-j9op947d973jmd75ipkoh2142e15cgcs.apps.googleusercontent.com"
-            data-redirecturi="postmessage"
-            data-accesstype="offline"
-            data-cookiepolicy="single_host_origin"
-            data-callback="signInCallback"
-            data-approvalprompt="force">
-         </span>
-      </div>
       <div id="result"></div>
       <script>
          function signInCallback(authResult) {

@@ -47,13 +47,14 @@ def gconnect():
     # Obtain authorization code, now compatible with Python3
     # request.get_data()
     code = request.data.decode('utf-8')
+    print code
     try:
         # Upgrade the authorization code into a credentials object
-        print "flow from clientsecrets"
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
+        print "error!"
         response = make_response(
             json.dumps('Failed to upgrade the authorization code.'), 401)
         response.headers['Content-Type'] = 'application/json'
@@ -183,6 +184,10 @@ def disconnect():
         print "No provider"
         return redirect(url_for('showSportCategories'))
 
+@app.route('/manyak')
+def force():
+    del login_session['state']
+    return jsonify(login_session)
 
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
@@ -307,7 +312,7 @@ def showItems(category_id):
                                 category = category)
 
 
-@app.route('/categories/<int:category_id>/createitem/', methods=['GET','POST'])
+@app.route('/categories/<int:category_id>/new/', methods=['GET','POST'])
 def newItem(category_id):
     """
     In newItem(), we query the category_id that we selected, render the html
@@ -331,7 +336,7 @@ def newItem(category_id):
     else:
         return render_template('new_item.html', category = category)
 
-@app.route('/categories/<int:category_id>/edititem/<int:item_id>',
+@app.route('/categories/<int:category_id>/edit/<int:item_id>/',
             methods=['GET','POST'])
 def editItem(category_id, item_id):
     """
@@ -361,7 +366,7 @@ def editItem(category_id, item_id):
                                category = category,
                                item = item)
 
-@app.route('/categories/<int:category_id>/deleteitem/<int:item_id>',
+@app.route('/categories/<int:category_id>/delete/<int:item_id>',
             methods=['GET','POST'])
 def deleteItem(category_id, item_id):
     """
