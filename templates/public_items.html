@@ -1,38 +1,42 @@
 {% extends "login-main-block.html" %}
 {% block content %}
-    <div class="row">
-      <div class="col-6">
-        <p class="text-left">
-          <a href ='{{url_for("showSportCategories")}}'>back to sport list</a>
-        </p>
-      </div>
-      <div class="col-6">
+<div class="row">
+  <div class="col-6">
+    <p class="text-left">
+      <a href ='{{url_for("showSportCategories")}}'><i class="fa fa-arrow-left fa-2x"></i></a>
+    </p>
+  </div>
+     <div class="col-6">
         <p class="text-right">
-          <a href='{{url_for("showLogin")}}'> login </a>
+          <a href='{{url_for("showLogin")}}'> <i class="fa fa-sign-in fa-2x"></i></a> <br>
         </p>
-      </div>
-    </div>
+     </div>
+</div>
     <div class="row">
       <div class="col-12">
         <h1 class="text-center"> {{category.name}} items </h1>
       </div>
     </div>
-    <div class="row">
-    {% for item in items %}
-      <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-14">
-         <div class="card bg-light text-dark">
-            <a href='{{url_for("showItems",category_id=category.id)}}'>
-            <img class="card-img" src="{{url_for('static', filename='basketball.png')}}">
-          </a>
-            <div class="card-img-overlay">
-               <p class="card-title center">Item name: {{item.name}}</a></p>
-               <p class="card-text center">Item description: {{item.description}}</p>
-               <p class="card-text center"> <a href='{{url_for("editItem", category_id = category.id, item_id = item.id)}}'> Edit </a></p>
-               <p class="card-text center"> <a href='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}'> Delete </a> </p>
-            </div>
-         </div>
-      </div>
-    {% endfor %}
-  </div>
+    <div class="card-deck">
+       {% for item in items %}
+       <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-14">
+          <div class="card bg-light text-dark">
+             <img class="card-img-top" src="{{url_for('static', filename='basketball.png')}}">
+             <div class="card-block">
+                <p class="card-title center">{{item.name}}</p>
+                <p class="card-text center">{{item.description}}</p>
+                <div class="card-footer">
+                  {% if 'username' not in login_session %}
+                    <p class="card-text right"> unauthorized <i class="fa fa-ban fa-1x"></i></p>
+                  {% else %}
+                    <p class="card-text right"><a href='{{url_for("editItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-edit fa-2x" aria-hidden="true"></i></a> </p>
+                    <p class="card-text right"><a href='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-trash fa-2x"></i></a></p>
+                  {% endif %}
+                </div>
+              </div>
+          </div>
+       </div>
+       {% endfor %}
+    </div>
 
 {% endblock %}

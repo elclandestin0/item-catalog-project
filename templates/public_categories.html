@@ -12,19 +12,25 @@
     <h1 class="text-center"> List of sports </h1>
   </div>
 </div>
-<div class="row">
-            {% for category in categories %}
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-14">
-               <div class="card bg-light text-dark">
-                  <img class="card-img" src="{{url_for('static', filename='basketball.png')}}">
-                  <div class="card-img-overlay">
-                     <p class="card-title center"><a href='{{url_for("showItems",category_id=category.id)}}'>{{category.name}}</a></p>
-                     <p class="card-text center"> {{category.description}}</p>
-                     <p class="card-text center"><a href='{{url_for("editSportCategory", category_id = category.id)}}'> edit </a>  </p>
-                     <p class="card-text center"><a href='{{url_for("deleteSportCategory", category_id = category.id)}}'> delete </a>
-                  </div>
-               </div>
+<div class="card-deck">
+   {% for category in categories %}
+   <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-14">
+      <div class="card bg-light text-dark">
+         <img class="card-img-top" src="{{url_for('static', filename='basketball.png')}}">
+         <div class="card-block">
+            <p class="card-title center"><a href='{{url_for("showItems",category_id=category.id)}}'>{{category.name}}</a></p>
+            <p class="card-text center">{{category.description}}</p>
+            <div class="card-footer">
+               {% if 'username' not in login_session %}
+               <p class="card-text right red"> unauthorized, please login <i class="fa fa-ban fa-1x"></i></p>
+               {% else %}
+               <p class="card-text right"><a href='{{url_for("editSportCategory", category_id = category.id)}}'><i class="fa fa-edit fa-2x space" aria-hidden="true"></i></a><a href='{{url_for("deleteSportCategory", category_id = category.id)}}'><i class="fa fa-trash fa-2x"></i></a> </p>
+               <p class="card-text right"></p>
+               {% endif %}
             </div>
-            {% endfor %}
           </div>
+      </div>
+   </div>
+   {% endfor %}
+</div>
 {% endblock %}

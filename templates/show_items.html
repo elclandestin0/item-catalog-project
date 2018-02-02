@@ -1,17 +1,16 @@
 {% extends "login-main-block.html" %}
 {% block content %}
     <div class="row">
-      <div class="col-6">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
         <p class="text-left">
-          <a href ='{{url_for("showSportCategories")}}'>back to sport list</a>
+          <a href ='{{url_for("showSportCategories")}}'><i class="fa fa-arrow-left fa-2x"></i></a>
         </p>
       </div>
-      <div class="col-6">
-        <p class="text-right">
-          <a href='{{url_for("newItem", category_id = category.id)}}'> create new item </a> <br>
-          <a href="{{url_for('disconnect')}}"> logout </a>
-        </p>
-      </div>
+         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <p class="text-right">
+               <a href='{{url_for("newItem", category_id = category.id)}}'> <i class="fa fa-plus fa-2x space"></i></a><a href='{{url_for("disconnect")}}'> <i class="fa fa-sign-out fa-2x"></i></a> <br>
+            </p>
+         </div>
     </div>
     <div class="row">
       <div class="col-12">
@@ -27,8 +26,13 @@
                 <p class="card-title center">{{item.name}}</p>
                 <p class="card-text center">{{item.description}}</p>
                 <div class="card-footer">
-                   <p class="card-text right"><a href='{{url_for("editItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-edit fa-2x" aria-hidden="true"></i></a> </p>
-                   <p class="card-text right"><a href='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-trash fa-2x"></i></a></p>
+                  {% if category.user_id != login_session[user_id] %}
+                    <p class="card-text right"> unauthorized <i class="fa fa-ban fa-2x"></i></p>
+                    <p class="card-text right"> unauthorized <i class="fa fa-ban fa-2x"></i></p>
+                  {% else %}
+                    <p class="card-text right"><a href='{{url_for("editItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-edit fa-2x" aria-hidden="true"></i></a> </p>
+                    <p class="card-text right"><a href='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-trash fa-2x"></i></a></p>
+                  {% endif %}
                 </div>
               </div>
           </div>
