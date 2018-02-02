@@ -266,15 +266,6 @@ def disconnect():
         print "No provider"
         return redirect(url_for('showSportCategories'))
 
-@app.route('/manyak')
-def force():
-    del login_session['_flashes']
-    return jsonify(login_session)
-
-@app.route('/login_session')
-def ret():
-    return jsonify(login_session)
-
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
                    'email'], image=login_session['picture'])

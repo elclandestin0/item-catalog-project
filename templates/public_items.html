@@ -27,7 +27,7 @@
                 <p class="card-text center">{{item.description}}</p>
                 <div class="card-footer">
                   {% if 'username' not in login_session %}
-                    <p class="card-text right"> unauthorized <i class="fa fa-ban fa-1x"></i></p>
+                    <p class="card-text center"><i class="fa fa-ban fa-2x"></i></p>
                   {% else %}
                     <p class="card-text right"><a href='{{url_for("editItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-edit fa-2x" aria-hidden="true"></i></a> </p>
                     <p class="card-text right"><a href='{{url_for("deleteItem", category_id = category.id, item_id = item.id)}}'><i class="fa fa-trash fa-2x"></i></a></p>
