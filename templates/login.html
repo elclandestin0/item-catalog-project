@@ -21,12 +21,15 @@
               data-approvalprompt="force">
            </span>
         </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div id="result"></div>
+      </div>
     </div>
     </div>
   </div>
   </div>
       <!-- GOOGLE PLUS SIGN IN-->
-      <div id="result"></div>
+
       <script>
          function signInCallback(authResult) {
            if (authResult['code']) {
@@ -42,7 +45,7 @@
                success: function(result) {
                  // Handle or verify the server response if necessary.
                  if (result) {
-                   $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...');
+                   $('#result').html('<p class="text-align center">Login Successful!</br>'+ result + '</br>Redirecting...</p>');
                    setTimeout(function() {
                      window.location.href = "/categories/";
                    }, 4000);

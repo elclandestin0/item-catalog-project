@@ -179,10 +179,10 @@ def disconnect():
         del login_session['user_id']
         flash("You have successfully been logged out.")
         print("Successfully logged out")
-        return redirect(url_for('showSportCategories'))
+        return redirect(url_for('showLogin'))
     else:
         print "No provider"
-        return redirect(url_for('showLogin'))
+        return redirect(url_for('showSportCategories'))
 
 @app.route('/manyak')
 def force():
