@@ -227,7 +227,9 @@ def showSportCategories():
     if 'username' not in login_session:
         return render_template('public_categories.html', categories = categories)
     else:
-        return render_template('all_categories.html', categories = categories)
+        return render_template('all_categories.html',
+                               categories = categories,
+                               login_session = login_session)
 
 # add login required here
 @app.route('/categories/new', methods=['GET','POST'])

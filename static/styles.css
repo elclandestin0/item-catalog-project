@@ -31,10 +31,10 @@
 
 html,
 body {
-    font-size: 14px; 
+    font-size: 14px;
     height: 100%;
     margin: 0;
-    font-family: monospace, sans-serif;
+    font-family: sans-serif;
 }
 
 .container {
@@ -42,6 +42,9 @@ body {
     margin-bottom: -50px;
 }
 
+.space {
+  margin-right: 8px;
+}
 .header {
     font-size: 35px;
 }
