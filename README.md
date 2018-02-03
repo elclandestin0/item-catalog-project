@@ -6,10 +6,22 @@ Hello and welcome to the Sport Items Catalog Project! This project is created fo
 To get this baby up and running, simply clone this project, <code> cd</code> into the directory you just cloned, and run <code> python views.py </code>. It should be noted that the port number is <code>5000</code>. Once that's done, head on to your favourite web browser and go to <code>localhost:5000/login</code>. 
 
 
+<<<<<<< HEAD
 ![screen shot 2018-02-02 at 6 33 51 pm](https://user-images.githubusercontent.com/5374699/35759523-340bc8a4-0848-11e8-9319-d8474452ba94.png)
+||||||| merged common ancestors
+ However, if the card belongs to you and you're logged in, then it shows the edit/delete icon.
+=======
+However, if the card belongs to you and you're logged in, then it shows the edit/delete icon.
+>>>>>>> Moved static back to correct css bug. views.py and model.py are now pep8 compliant
 
+<<<<<<< HEAD
 Login using your favourite social media platform and you'll be taken to the home page. In the home page, you'll see cards that display each individual category (created by users).
 ![screen shot 2018-02-02 at 6 33 07 pm](https://user-images.githubusercontent.com/5374699/35759521-32fb13ac-0848-11e8-81fa-4f774f594c5c.png)
+||||||| merged common ancestors
+ Clicking on the card title (name of the sport) will take you to a page where it display the sport's items. There, you can create your own cards and also edit/delete cards. It should be noted that while you can access a sports category's items page when you're logged out or if it doesn't belong to you, you can't add a new card 
+=======
+ Clicking on the card title (name of the sport) will take you to a page where it display the sport's items. There, you can create your own cards and also edit/delete cards. It should be noted that while you can access a sports category's items page when you're logged out or if it doesn't belong to you, you can't add a new card
+>>>>>>> Moved static back to correct css bug. views.py and model.py are now pep8 compliant
 
 It contains the name, description and a footer of different icons. If a category doesn't belong to you or you're not logged in, then it displays a block sign (seen below).
 
