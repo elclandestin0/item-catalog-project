@@ -55,7 +55,7 @@ CLIENT_ID = json.loads(
 
 @app.route('/privacy')
 def showPrivacyPolicy():
-    return render_template('privacy_policy.html')
+    return redirect(url_for('https://www.iubenda.com/privacy-policy/51134668'))
 
 @app.route('/login')
 def showLogin():
@@ -73,6 +73,14 @@ def showLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
+    """
+    In the function gconnect, we use the state of the object to check if it's
+    in the login_session. If it is, then we exchange the client secrets for a
+    credentials, which has the access token. We check if the access token is
+    valid and other necessary checks. If all is satisfied, then we parse in the
+    user information into the login_session. If the user doesn't exist, then
+    we create a new user in the database using his/her google information.
+    """
 
     # Validate state token
 
@@ -85,18 +93,14 @@ def gconnect():
     # request.get_data()
 
     code = request.data.decode('utf-8')
-    print code
     try:
-
         # Upgrade the authorization code into a credentials object
-
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
         print 'error!'
-        response = make_response(
-                   json.dumps('Failed to upgrade the authorization code.'),
+        response = make_response(json.dumps('Failed to upgrade the authorization code.'),
                    401)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -244,10 +248,10 @@ def fbconnect():
              open('fb_client_secrets.json', 'r').read()
              )['web']['app_id']
 
-    app_secret = json.loads(
-                 open('fb_client_secrets.json', 'r').read()
-                 )['web']['app_secret']
-    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (app_id, app_secret, access_token)
+    app_secret = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']
+    url = 'https://graph.facebook.com/oauth/access_token?\
+            grant_type=fb_exchange_token&client_id=%s&client_secret=%s&\
+            fb_exchange_token=%s' % (app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
 
@@ -366,7 +370,7 @@ def getUserID(email):
         user = session.query(User).filter_by(email=email).one()
         return user.id
     except:
-        return None
+        return "Nothing found"
 
 
 @app.route('/')
@@ -398,9 +402,6 @@ def newSportCategory():
     noted that a user must be logged in to create a new catalog.
     """
 
-    # add logic gate  to check user name
-    # if 'username' not in login_session:
-    #     return redirect('/login')
     if 'username' not in login_session:
         return redirect('/login')
 
@@ -435,7 +436,8 @@ def editSportCategory(category_id):
             edit_category.name = request.form['name']
         if request.form['description']:
             edit_category.description = request.form['description']
-            return redirect(url_for('showSportCategories'))
+
+        return redirect(url_for('showSportCategories'))
     else:
         return render_template('edit_category.html',
                                category=edit_category)
@@ -452,7 +454,6 @@ def deleteSportCategory(category_id):
 
     delete_category = \
         session.query(Category).filter_by(id=category_id).one()
-    items = session.query(Item).filter_by(category_id=delete_category.id).all()
     if 'username' not in login_session:
         return redirect('/login')
     if delete_category.user_id != login_session['user_id']:
@@ -464,6 +465,7 @@ def deleteSportCategory(category_id):
     else:
         return render_template('delete_category.html',
                                category=delete_category)
+
 
 @app.route('/categories/<int:category_id>/')
 @app.route('/categories/<int:category_id>/items')
@@ -505,7 +507,6 @@ def newItem(category_id):
         new_item = Item(name=request.form['name'],
                         description=request.form['description'],
                         category=category)
-
         session.add(new_item)
         session.commit()
         return redirect(url_for('showItems', category_id=category_id))
@@ -577,9 +578,8 @@ def deleteItem(category_id, item_id):
 @app.route('/categories/<int:category_id>/items/JSON')
 def showItemsJSON(category_id):
     """This method serializes the sport items of a category into a JSON file"""
-
     category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(Item).filter_by(category_id=category_id).all()
+    items = session.query(Item).filter_by(category_id=category.id).all()
     return jsonify(Items=[item.serialize for item in items])
 
 
@@ -589,12 +589,10 @@ def showCategoriesJSON():
     file"""
 
     categories = session.query(Category).all()
-    return jsonify(categories=[category.serialize for category in
-                   categories])
-
+    return jsonify(categories=[category.serialize for category in categories])
 
 @app.route('/users/JSON')
-def showCategoriesJSON():
+def showUsers():
     """This method serializes all the restaurants in the database into a JSON
     file"""
 

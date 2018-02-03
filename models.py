@@ -2,27 +2,25 @@
 # -*- coding: utf-8 -*-
 #   Code written by: Memo Khoury, with the generous
 #   help of the Udacity team.
-
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, sessionmaker
-from sqlalchemy import create_engine
-from passlib.apps import custom_app_context as pwd_context
 import random
 import string
 from itsdangerous import (
     TimedJSONWebSignatureSerializer as Serializer,
     BadSignature,
     SignatureExpired
-)
+    )
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy import create_engine
+from passlib.apps import custom_app_context as pwd_context
+
 
 Base = declarative_base()
-secret_key = ''.join(random.choice(string.ascii_uppercase +
-                     string.digits) for x in xrange(32))
+secret_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
 
 
 class User(Base):
-
     """
     Here, we initialize the 'User' relation. It consists of the following
     tables:
@@ -41,7 +39,6 @@ class User(Base):
     password_hash = Column(String(64))
 
     def hash_password(self, password):
-
         # The hashing algorithm takes in the user's password as input, and then
         # proceed to encrypt it and store it as the user's hashed password in
         # the catalog database.
@@ -49,7 +46,6 @@ class User(Base):
         self.password_hash = pwd_context.encrypt(password)
 
     def verify_password(self, password):
-
         # The verify password algorithm takes in the user's password as input,
         # and then it proceeds to verify if the hashed password is = to the
         # password (after decrypting it using the SHA-256 algorithm)
@@ -57,7 +53,6 @@ class User(Base):
         return pwd_context.verify(password, self.password_hash)
 
     def generate_auth_token(self, expiration=600):
-
         # If the user favours using an authorization token through OAuth 2.0,
         # we proceed to serialize the secret_key that is randomly generated
         # upon the user signing in via his/her favourite social media account.
@@ -69,7 +64,6 @@ class User(Base):
 
     @staticmethod
     def verify_auth_token(token):
-
         # To verify the auth_token we generated, we serialize the secret_key,
         # and fetch the token. If the Signature is expired or it is an invalid
         # token, we return nothing. Else we allocate the user_id to data['id']
@@ -90,7 +84,6 @@ class User(Base):
     @property
     def serialize(self):
         """Return User object data in easily serializeable format"""
-
         return {
             'id': self.id,
             'name': self.name,
