@@ -17,13 +17,10 @@ This project is
 meant to be open-source, so you can fork it, make your own modifications and request to pull it back. We can then discuss whether it is a good feature to be uploaded, or not!
 
 
-
 ![screen shot 2018-02-02 at 6 33 51 pm](https://user-images.githubusercontent.com/5374699/35759523-340bc8a4-0848-11e8-9319-d8474452ba94.png)
 
- However, if the card belongs to you and you're logged in, then it shows the edit/delete icon.
-
-
 Login using your favourite social media platform and you'll be taken to the home page. In the home page, you'll see cards that display each individual category (created by users).
+
 ![screen shot 2018-02-02 at 6 33 07 pm](https://user-images.githubusercontent.com/5374699/35759521-32fb13ac-0848-11e8-81fa-4f774f594c5c.png)
 
  Clicking on the card title (name of the sport) will take you to a page where it display the sport's items. There, you can create your own cards and also edit/delete cards. It should be noted that while you can access a sports category's items page when you're logged out or if it doesn't belong to you, you can't add a new card.
@@ -33,7 +30,6 @@ It contains the name, description and a footer of different icons. If a category
 ![screen shot 2018-02-02 at 6 32 40 pm](https://user-images.githubusercontent.com/5374699/35759520-308f58bc-0848-11e8-8ec3-4901179440fd.png)
 
 However, if the card belongs to you and you're logged in, then it shows the edit/delete icon.
-
 
 ![screen shot 2018-02-02 at 6 31 58 pm](https://user-images.githubusercontent.com/5374699/35759515-2caacba0-0848-11e8-868b-68f9ae9d6261.png)
 
