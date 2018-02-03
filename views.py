@@ -430,6 +430,7 @@ def deleteSportCategory(category_id):
 
     delete_category = \
         session.query(Category).filter_by(id=category_id).one()
+    items = session.query(Item).filter_by(category_id=delete_category.id).all()
     if 'username' not in login_session:
         return redirect('/login')
     if delete_category.user_id != login_session['user_id']:
@@ -437,8 +438,10 @@ def deleteSportCategory(category_id):
     if request.method == 'POST':
         session.delete(delete_category)
         session.commit()
-        return redirect(url_for('showSportCategories',
-                        category_id=category_id))
+        for item in items:
+            session.delete(item)
+            session.commit()
+        return redirect(url_for('showSportCategories'))
     else:
         return render_template('delete_category.html',
                                category=delete_category)
