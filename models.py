@@ -10,8 +10,11 @@ from sqlalchemy import create_engine
 from passlib.apps import custom_app_context as pwd_context
 import random
 import string
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, \
-    BadSignature, SignatureExpired
+from itsdangerous import (
+    TimedJSONWebSignatureSerializer as Serializer,
+    BadSignature,
+    SignatureExpired
+)
 
 Base = declarative_base()
 secret_key = ''.join(random.choice(string.ascii_uppercase +
@@ -76,14 +79,10 @@ class User(Base):
         try:
             data = s.loads(token)
         except SignatureExpired:
-
             # Valid Token, but expired
-
             return None
         except BadSignature:
-
             # Invalid Token
-
             return None
         user_id = data['id']
         return user_id
@@ -129,6 +128,7 @@ class Category(Base):
     description = Column(String(250))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+    item = relationship('Item', cascade='all, delete-orphan')
 
     @property
     def serialize(self):

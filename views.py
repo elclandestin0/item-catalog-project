@@ -1,8 +1,24 @@
 
-from models import Base, User, Item, Category
-from flask import Flask, jsonify, request, url_for, abort, g, \
-    render_template, redirect, flash
-from flask import session as login_session
+from models import (
+    Base,
+    User,
+    Item,
+    Category
+)
+
+from flask import (
+    Flask,
+    jsonify,
+    request,
+    url_for,
+    abort,
+    g,
+    render_template,
+    redirect,
+    flash,
+    session as login_session
+)
+
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine, asc
@@ -36,6 +52,10 @@ CLIENT_ID = json.loads(
 
 
 # login and google connect
+
+@app.route('/privacy')
+def showPrivacyPolicy():
+    return render_template('privacy_policy.html')
 
 @app.route('/login')
 def showLogin():
@@ -381,6 +401,8 @@ def newSportCategory():
     # add logic gate  to check user name
     # if 'username' not in login_session:
     #     return redirect('/login')
+    if 'username' not in login_session:
+        return redirect('/login')
 
     if request.method == 'POST':
         new_sport = Category(name=request.form['name'],
@@ -438,14 +460,10 @@ def deleteSportCategory(category_id):
     if request.method == 'POST':
         session.delete(delete_category)
         session.commit()
-        for item in items:
-            session.delete(item)
-            session.commit()
         return redirect(url_for('showSportCategories'))
     else:
         return render_template('delete_category.html',
                                category=delete_category)
-
 
 @app.route('/categories/<int:category_id>/')
 @app.route('/categories/<int:category_id>/items')
