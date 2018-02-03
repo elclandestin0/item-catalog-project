@@ -17,9 +17,10 @@ from passlib.apps import custom_app_context as pwd_context
 
 
 Base = declarative_base()
-secret_key = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
-
-
+secret_key = ''.join(
+                    random.choice(
+                        string.ascii_uppercase + string.digits
+                    )   for x in xrange(32))
 class User(Base):
     """
     Here, we initialize the 'User' relation. It consists of the following
@@ -92,7 +93,6 @@ class User(Base):
             'image': self.image,
             }
 
-
 class Category(Base):
 
     """
@@ -132,8 +132,6 @@ class Category(Base):
             'name': self.name,
             'description': self.description
             }
-
-
 class Item(Base):
 
     """

@@ -19,6 +19,7 @@ from flask import (
     session as login_session
 )
 
+from flask_seasurf import SeaSurf
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine, asc
@@ -43,6 +44,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 app = Flask(__name__)
+csrf = SeaSurf(app)
 
 # LOAD CLIENT_ID BY PARSING IT FROM CLIENT_SECRETS.JSON (from google)
 
